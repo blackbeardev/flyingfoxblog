@@ -1,15 +1,45 @@
-img {
-     height: 50%;   
+.indexImg {
+    height: 46%;
+    display: block;
+    margin: 0 auto;
+}
+
+.show-img {
+     height: 40%; 
+    display: block;
+    margin: 0 auto;
 }
 
 i.icon {
     font-size: 2em;
 }
 
-.container.main {
+.overallContainer {
     margin-top: 7em;
+    margin-bottom: 3em;
+}
+
+
+.text-left {
+    margin-left: 3em;
+    margin-top: 1em;
 }
 
 .header {
     text-align: center;
+}
+
+.ui.segment {
+    margin-top: 5em;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 600px) {
+
+    .indexImg {
+        height: 20%;
+    }
+    
+    .show-img {
+        height: 20%;
+    }
 }
