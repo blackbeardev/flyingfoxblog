@@ -4,6 +4,7 @@ var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var methodOverride = require("method-override");
+var Blog = require("./models/blogs");
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -14,24 +15,7 @@ app.use(methodOverride("_method"));
 
 mongoose.connect("mongodb://localhost/flyingfoxblog");
 
-var blogSchema = new mongoose.Schema({
-    title: String,
-    image: String,
-    body: String,
-    created: 
-        {
-            type: Date,
-            default: Date.now
-        }
-});
 
-var Blog = mongoose.model("Blog", blogSchema);
-
-// Blog.create({
-//     title: "Test blog",
-//     image: "https://images.unsplash.com/photo-1433162653888-a571db5ccccf?auto=format&fit=crop&w=1350&q=80",
-//     body: "This is the body text for the test blog entry."
-// });
 
 // Routes
 
