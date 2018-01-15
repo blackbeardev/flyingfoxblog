@@ -4,9 +4,21 @@
     <div class="ui huge header"><%= blog.title %></div>
     <img class="show-img" src="<%= blog.image %>">
     <div class="text-left description">
-        <h5><span><%= blog.created.toDateString() %></span></h5>
-        <p><%= blog.body %></p>
+        <h5><span><%- blog.created.toDateString() %></span></h5>
+        <p><%- blog.body %></p>
+        <div class="sideBySide">
+            <div>
+                <a class="ui inverted violet button" href="/blogs/<%=blog._id%>/edit">Edit</a>
+            </div>
+            
+            <form action="/blogs/<%=blog._id%>?_method=DELETE" method="POST">
+                <button class="ui inverted red button">Delete</button>
+            </form>
+        </div>
+        
+        
     </div>
+    
     
     
 </div>

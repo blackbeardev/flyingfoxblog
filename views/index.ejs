@@ -4,11 +4,14 @@
 <div class="ui main container overallContainer">
     <% blogs.forEach(function(blog) { %>
         <div class="ui main text container segment">
-            <h2><%= blog.title %></h2>
+            <h2 class="ui huge header"><%= blog.title %></h2>
             <img class="indexImg" src="<%=blog.image%>">
-            <h5><%= blog.created %></h5>
-            <p><%= blog.body %></p>
+            <div class="text-left description">
+                            <h5><%= blog.created.toDateString() %></h5>
+            <p><%= blog.body.substring(0, 100) %>...</p>
             <a href="/blogs/<%=blog._id%>">Read More</a>
+            </div>
+
         </div>
     <% });%>
 </div>
