@@ -5,6 +5,7 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var methodOverride = require("method-override");
 var Blog = require("./models/blogs");
+var Comment = require("./models/comments");
 var seedDB = require("./seed");
 
 //Call the seed.js file:

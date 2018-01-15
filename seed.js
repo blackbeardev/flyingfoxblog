@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var Blog = require("./models/blogs");
+var Comment = require("./models/comments");
 
 var data = [
         {
@@ -33,18 +34,31 @@ function seedDB() {
         }
         //Add a few blog posts:
         data.forEach(function(seed) {
-            Blog.create(seed, function(err, data) {
+            Blog.create(seed, function(err, post) {
                 if(err) {
                     console.log(err);
                 } else {
-                    console.log("Added a campground");
+                    console.log("Added a post");
+                    //Create a comment:
+                    Comment.create(
+                            {
+                                text: "This is a great article, thanks for posting!",
+                                author: "Bob the Builder"
+                            }, function(err, comment) {
+                                if(err) {
+                                    console.log(err);
+                                } else {
+                                    post.comments.push(comment);
+                                    post.save();
+                                    console.log("Created new comment.");
+                                }
+                            }
+                        );
+                    
                 }
             });
         });
     });
-    
-    
-    
 }
 
 //Export the seedDB function so it can be used in app.js
