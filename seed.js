@@ -48,7 +48,7 @@ function seedDB() {
                                 if(err) {
                                     console.log(err);
                                 } else {
-                                    post.comments.push(comment);
+                                    post.comments.push(comment._id);
                                     post.save();
                                     console.log("Created new comment.");
                                 }
@@ -64,3 +64,4 @@ function seedDB() {
 //Export the seedDB function so it can be used in app.js
 
 module.exports = seedDB;
+

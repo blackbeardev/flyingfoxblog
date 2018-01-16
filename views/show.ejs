@@ -2,10 +2,13 @@
 
 <div class="ui main text container segment overallContainer">
     <div class="ui huge header"><%= blog.title %></div>
-    <img class="show-img" src="<%= blog.image %>">
+    <img class="show-img" src="<%= blog.image %>" height="300" width="550">
     <div class="text-left description">
         <h5><span><%- blog.created.toDateString() %></span></h5>
         <p><%- blog.body %></p>
+        
+        
+    
         <div class="sideBySide">
             <div>
                 <a class="ui inverted violet button" href="/blogs/<%=blog._id%>/edit">Edit</a>
@@ -15,6 +18,14 @@
                 <button class="ui inverted red button">Delete</button>
             </form>
         </div>
+        
+        <div>
+            <h3>Comments</h3>
+        </div>
+        
+        <% blog.comments.forEach(function(comment) { %>
+            <h5><strong><%=comment.author%></strong> - <%=comment.text%></h5>
+        <% }); %>
         
         
     </div>
