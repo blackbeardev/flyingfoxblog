@@ -1,7 +1,7 @@
-<% include ./partials/header %>
+<% include ../partials/header %>
 
 <div class="ui main text container segment overallContainer">
-    <div class="ui huge header"><%= blog.title %></div>
+    <div class="ui huge header"><%=blog.title%></div>
     <img class="show-img" src="<%= blog.image %>" height="300" width="550">
     <div class="text-left description">
         <h5><span><%- blog.created.toDateString() %></span></h5>
@@ -20,12 +20,15 @@
         </div>
         
         <div>
+            
+            <p><a class="ui inverted green button" href="/blogs/<%=blog._id%>/comments/new">Add a new comment</a></p>
             <h3>Comments</h3>
+            <% blog.comments.forEach(function(comment) { %>
+            <p class="commentsText"><strong><%=comment.author%></strong> - <%=comment.text%></p>
+        <% }); %>
         </div>
         
-        <% blog.comments.forEach(function(comment) { %>
-            <h5><strong><%=comment.author%></strong> - <%=comment.text%></h5>
-        <% }); %>
+        
         
         
     </div>
@@ -35,4 +38,4 @@
 </div>
 
 
-<% include ./partials/footer %>
+<% include ../partials/footer %>

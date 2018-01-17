@@ -8,8 +8,7 @@ var Blog = require("./models/blogs");
 var Comment = require("./models/comments");
 var seedDB = require("./seed");
 
-//Call the seed.js file:
-seedDB();
+
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -20,7 +19,8 @@ app.use(methodOverride("_method"));
 
 mongoose.connect("mongodb://localhost/flyingfoxblog");
 
-
+//Call the seed.js file:
+seedDB();
 
 // Routes
 
@@ -33,20 +33,20 @@ app.get("/blogs", function(req, res) {
         if(err) {
             console.log(err);
         } else {
-            res.render("index", {blogs:blogs});
+            res.render("blogs/index", {blogs:blogs});
         }
     });
 });
 
 app.get("/blogs/new", function(req, res) {
-    res.render("new");
+    res.render("blogs/new");
 });
 
 app.post("/blogs", function(req, res) {
     Blog.create(req.body.blog, function(err, newPost) {
         if(err) {
             console.log(err);
-            res.render("new");
+            res.render("blogs/new");
         } else {
             res.redirect("/blogs");
         } 
@@ -59,7 +59,7 @@ app.get("/blogs/:id", function(req, res) {
             console.log(err);
         } else {
             console.log(foundBlog);
-            res.render("show", {blog: foundBlog});
+            res.render("blogs/show", {blog: foundBlog});
         }
     });
 });
@@ -69,7 +69,7 @@ app.get("/blogs/:id/edit", function(req, res) {
         if(err) {
             console.log(err);
         } else {
-            res.render("edit", {blog: foundBlog});
+            res.render("blogs/edit", {blog: foundBlog});
         }
     });
 });
@@ -94,6 +94,38 @@ app.delete("/blogs/:id", function(req, res) {
     });
 });
 
+// ================================================================================
+
+//Comment Routes
+
+app.get("/blogs/:id/comments/new", function(req, res) {
+    Blog.findById(req.params.id, function(err, foundBlog) {
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("comments/new", {blog: foundBlog});
+        }
+    });
+});
+
+app.post("/blogs/:id/comments", function(req, res) {
+    Blog.findById(req.params.id, function(err, blog) {
+        if(err) {
+            console.log(err);
+            res.redirect("/blogs");
+        } else {
+            Comment.create(req.body.comment, function(err, newComment) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    blog.comments.push(newComment);
+                    blog.save();
+                    res.redirect("/blogs/" + blog._id);
+                }
+            });
+        }
+    });
+});
 
 
 app.listen(process.env.PORT, process.env.IP, function() {
