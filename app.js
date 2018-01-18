@@ -4,8 +4,11 @@ var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var methodOverride = require("method-override");
+var passport = require("passport");
+var LocalStrategy = require("passport-local");
 var Blog = require("./models/blogs");
 var Comment = require("./models/comments");
+var User = require("./models/user");
 var seedDB = require("./seed");
 
 
@@ -21,6 +24,19 @@ mongoose.connect("mongodb://localhost/flyingfoxblog");
 
 //Call the seed.js file:
 seedDB();
+
+//Passport configuration:
+app.use(require("express-session")({
+    secret: "Nixon is a cat",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Routes
 
@@ -124,6 +140,25 @@ app.post("/blogs/:id/comments", function(req, res) {
                 }
             });
         }
+    });
+});
+
+//Auth Routes:
+
+app.get("/register", function(req, res) {
+    res.render("register");
+});
+
+app.post("/register", function(req, res) {
+    var newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password, function(err, user) {
+        if(err) {
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req, res, function() {
+            res.redirect("/blogs");
+        });
     });
 });
 
