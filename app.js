@@ -114,7 +114,7 @@ app.delete("/blogs/:id", function(req, res) {
 
 //Comment Routes
 
-app.get("/blogs/:id/comments/new", function(req, res) {
+app.get("/blogs/:id/comments/new", isLoggedIn, function(req, res) {
     Blog.findById(req.params.id, function(err, foundBlog) {
         if(err) {
             console.log(err);
@@ -124,7 +124,7 @@ app.get("/blogs/:id/comments/new", function(req, res) {
     });
 });
 
-app.post("/blogs/:id/comments", function(req, res) {
+app.post("/blogs/:id/comments", isLoggedIn, function(req, res) {
     Blog.findById(req.params.id, function(err, blog) {
         if(err) {
             console.log(err);
@@ -175,6 +175,18 @@ app.post("/login", passport.authenticate("local",
     }), function(req, res) {
 });
 
+//Logout route:
+app.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("/blogs");
+});
+
+function isLoggedIn(req, res, next) {
+    if(req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
 
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Server is running..");

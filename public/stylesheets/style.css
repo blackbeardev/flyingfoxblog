@@ -1,3 +1,31 @@
+nav  {
+    
+}
+
+nav ul li {
+    list-style: none;
+    margin-right: 1.5em;
+}
+
+#hamburger {
+    display: none;
+    
+}
+
+#logo {
+    margin-top: .7em;
+}
+
+.navFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.mobileHide {
+    
+}
+
 .indexImg {
     /*height: 40%;*/
     display: block;
@@ -42,13 +70,35 @@ i.icon {
     font-size: .85rem;
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 350px) {
+@media only screen and (max-device-width : 400px) {
 
     .indexImg {
         height: 20%;
     }
     
+    #hamburger {
+        display: block;
+        position: absolute;
+        top: 40;
+        left: 50;
+        font-size: 4rem;
+    }
+    
+    
     .show-img {
         height: 20%;
     }
+    
+    .navFlex {
+        flex-direction: column;
+        position: relative;
+        top: 35;
+        left: 30;
+    }
+    
+    .dropdown {
+        display: none;
+    }
+    
+
 }
