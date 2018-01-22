@@ -17,6 +17,11 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
+//Make currentUser: req.user available on all routes:
+app.use(function(req, res, next) {
+    res.locals.currentUser = req.user;
+    next();
+});
 
 // Mongoose Config
 
@@ -45,6 +50,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/blogs", function(req, res) {
+    
     Blog.find({}, function(err, blogs) {
         if(err) {
             console.log(err);
@@ -75,7 +81,7 @@ app.get("/blogs/:id", function(req, res) {
             console.log(err);
         } else {
             console.log(foundBlog);
-            res.render("blogs/show", {blog: foundBlog});
+            res.render("blogs/show", {blog: foundBlog, currentUser: req.user});
         }
     });
 });
@@ -119,7 +125,7 @@ app.get("/blogs/:id/comments/new", isLoggedIn, function(req, res) {
         if(err) {
             console.log(err);
         } else {
-            res.render("comments/new", {blog: foundBlog});
+            res.render("comments/new", {blog: foundBlog, currentUser: req.user});
         }
     });
 });

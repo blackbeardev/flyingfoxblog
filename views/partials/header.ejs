@@ -7,26 +7,30 @@
     
     <body>
         
-             <div class="ui inverted menu">
+            <nav class="ui inverted menu">
                 <div class="ui container">
-                    <div class="header item"><i class="users icon"></i>FlyingFox Blog</div>
-                    <a href="/" class="item">Home</a>
-                    <a href="/blogs/new" class="item">New Post</a>
+                    <ul class="header item">
+                        <li><i class="users icon"></i>FlyingFox Blog</li>
+                        <li><a href="/" class="item">Home</a></li>
+                        <li><a href="/blogs/new" class="item">New Post</a></li>
+                    </ul>
                 </div>
                 <div class="ui container">
                     <div class="right menu">
-                        <a class="ui item" href="/register">
-                          Register
-                        </a>
-                        <a class="ui item" href="/login">
-                          Login
-                        </a>
-                        <a class="ui item" href="logout">
-                          Logout
-                        </a>
+                        <ul class="navFlex">
+                            <% if(!currentUser) { %>
+                                <li><a class="ui item" href="/register">Register</a></li>
+                                <li><a class="ui item" href="/login">Login</a></li>
+                            <% } else { %>
+                                <li class="signedInAs">Signed in as <%= currentUser.username %></li>
+                                <li><a class="ui item" href="logout">Logout</a></li>
+                            <% } %>
+                            
+                            
+                        </ul>
                     </div>
                 </div>
-            </div>
+            </nav>
         
         
         
